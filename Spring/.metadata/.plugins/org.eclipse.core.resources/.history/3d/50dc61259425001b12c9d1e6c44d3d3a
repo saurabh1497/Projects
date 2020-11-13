@@ -1,0 +1,22 @@
+package com.demo;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+
+import com.demo.services.BankService;
+import com.demo.services.BankServiceImpl;
+
+//@ComponentScan(basePackages = {"com.demo.repository","com.demo.services","com.demo.entities"})
+@SpringBootApplication
+public class SpringBootJpaDemoApplication {
+
+	public static void main(String[] args) {
+	ApplicationContext context =	SpringApplication.run(SpringBootJpaDemoApplication.class, args);
+	context.getBean(BankService.class);
+	
+	
+	}
+
+}

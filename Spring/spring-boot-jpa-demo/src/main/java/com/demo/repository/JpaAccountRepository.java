@@ -2,47 +2,77 @@ package com.demo.repository;
 
 import java.sql.SQLException;
 import java.util.List;
-
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.transaction.TransactionScoped;
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
 import com.demo.entities.Account;
 
 @Repository("jpa")
+//@Transactional
 public class JpaAccountRepository implements AccountRepository {
-	
+
 	@PersistenceContext
-	private EntityManager EntityManager;
+	private EntityManager em;
+	
 
 	@Override
-	public Account findAccountByNumber(Long accountNUmber) throws SQLException {
+	public Account findAccountByNumber(Long accountNumber) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		Account a = em.find(Account.class, accountNumber);
+		return a;
 	}
 
 	@Override
 	public List<Account> findAllAccounts() throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		TypedQuery<Account> query = em.createQuery("Select a from Account a", Account.class);
+		List<Account> accounts = query.getResultList();
+		return accounts;
 	}
 
 	@Override
 	public void save(Account account) throws SQLException {
 		// TODO Auto-generated method stub
-		
+//		EntityTransaction tx = em.getTransaction();
+//		tx.begin();
+		em.persist(account);
+//		tx.commit();
+
 	}
 
 	@Override
 	public void update(Account account) throws SQLException {
 		// TODO Auto-generated method stub
+		Account a = em.find(Account.class, account.getAccountNumber());
 		
+		if (a != null) {
+//			EntityTransaction tx = em.getTransaction();
+//			tx.begin();
+			a.setName(account.getName());
+			a.setEmailAddress(account.getEmailAddress());
+			a.setAddress(account.getAddress());
+			a.setBenificiaries(account.getBenificiaries());
+//			tx.commit();
+		}
+
 	}
 
 	@Override
 	public void delete(Account account) throws SQLException {
 		// TODO Auto-generated method stub
-		
+		Account a = em.find(Account.class, account.getAccountNumber());
+		if (a != null) {
+//			EntityTransaction tx = em.getTransaction();
+//			tx.begin();
+			em.remove(account);
+//			tx.commit();
+		}
 	}
+
 }

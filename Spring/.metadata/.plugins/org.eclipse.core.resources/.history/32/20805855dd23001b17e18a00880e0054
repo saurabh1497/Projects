@@ -1,0 +1,14 @@
+package com.zycus;
+
+import org.springframework.context.annotation.Bean;
+
+import com.zycus.dao.EmployeeDAO;
+
+public class MyConfiguration {
+	
+	@Bean
+	public EmployeeDAO getEmployee() {
+		return new EmployeeDAO();
+	}
+
+}

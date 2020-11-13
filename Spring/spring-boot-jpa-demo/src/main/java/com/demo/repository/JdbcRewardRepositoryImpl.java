@@ -42,9 +42,12 @@ public class JdbcRewardRepositoryImpl implements RewardRepository {
 		return 0;
 	}
 
-	public List<Reward> getAllRewardsForAccount(Long accountNUmber) {
-		
+	@Override
+	public List<Reward> getAllRewardsForAccount(Long accountNUmber) throws SQLException {
+		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 
 }

@@ -4,7 +4,10 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.demo.entities.Account;
@@ -16,15 +19,19 @@ import com.demo.repository.TransactionRepository;
 
 
 @Component
+@Transactional
 public class BankServiceImpl implements BankService {
 	
 	@Autowired
+	@Qualifier("jpa")
 	private AccountRepository accountRepository;
 	
 	@Autowired
+	@Qualifier("jpaTransaction")
 	private TransactionRepository transactionRepository;
 	
 	@Autowired
+	@Qualifier("jpareward")
 	private RewardRepository rewardRepository;	
 	
 	@Autowired
@@ -83,15 +90,19 @@ public class BankServiceImpl implements BankService {
 	}
 
 	public void deActivateAccount(Long accountNumber) throws SQLException {
-		Account account=accountRepository.findAccountByNumber(accountNumber);		
-		account.setActive(false);		
+		Account account=accountRepository.findAccountByNumber(accountNumber);	
+		if(account!=null) {
+		account.setActive(false);
+		}
 		accountRepository.update(account);
 		
 	}
 
 	public void activateAccount(Long accountNumber) throws SQLException {
 		Account account=accountRepository.findAccountByNumber(accountNumber);		
-		account.setActive(true);		
+		if(account!=null) {
+		account.setActive(true);
+		}
 		accountRepository.update(account);
 		
 	}

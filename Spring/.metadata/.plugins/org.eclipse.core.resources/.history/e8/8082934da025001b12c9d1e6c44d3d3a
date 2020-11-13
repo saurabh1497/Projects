@@ -1,0 +1,43 @@
+package com.demo.repository;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.transaction.Transactional;
+
+import org.springframework.stereotype.Repository;
+import com.demo.entities.*;
+
+@Repository("jpaTransaction")
+@Transactional
+public class JpaTransactionRepository implements TransactionRepository
+{
+	@PersistenceContext
+//	private EntityManagerFactory factory = Persistence.createEntityManagerFactory("jpa-relationship-demo");
+//	EntityManager em = factory.createEntityManager();
+    private EntityManager em;
+	
+	@Override
+	public Long addTransaction(TransactionDetail transactionDetail) throws SQLException 
+	{
+		// TODO Auto-generated method stub
+//		em.getTransaction().begin();
+		em.persist(transactionDetail);
+//		em.getTransaction().commit();
+		return transactionDetail.getAccountNumber();
+	}
+
+	@Override
+	public List<TransactionDetail> getAllTransactionDetailsByAccountNumber(Long accountNumber) throws SQLException 
+	{
+		// TODO Auto-generated method stub
+		return (List<TransactionDetail>) em.find(TransactionDetail.class, accountNumber);
+		
+	}
+
+}

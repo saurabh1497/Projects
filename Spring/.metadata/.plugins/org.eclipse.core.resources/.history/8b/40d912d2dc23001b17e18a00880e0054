@@ -1,0 +1,21 @@
+package com.zycus;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.zycus.dao.EmployeeDAO;
+
+public class Test {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		
+		ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
+		
+		EmployeeDAO employeedao = context.getBean(EmployeeDAO.class);
+		employeedao.saveEmployee();
+
+	}
+
+}

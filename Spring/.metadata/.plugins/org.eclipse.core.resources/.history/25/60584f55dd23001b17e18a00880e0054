@@ -1,0 +1,12 @@
+package com.zycus.dao;
+
+public class EmployeeDAO {
+
+	public EmployeeDAO() {
+		System.out.println("EmployeeDAO object created");
+	}
+	
+	public void saveEmployee() {
+		System.out.println("Saving Employee");
+	}
+}
